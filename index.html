@@ -1,0 +1,998 @@
+here
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#061225">
+<title>UEWC | Official</title>
+
+<style>
+:root{
+ --bg:#061225;
+ --panel:#0c1e38;
+ --panel2:#102847;
+ --blue:#1677ff;
+ --cyan:#55caff;
+ --white:#f3f7ff;
+ --muted:#91a7c4;
+ --line:#203956;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+ background:var(--bg);
+ color:var(--white);
+ font-family:Arial,sans-serif;
+ overflow-x:hidden;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+button:focus-visible,a:focus-visible{
+ outline:2px solid var(--cyan);
+ outline-offset:4px;
+}
+header{
+ height:72px;
+ position:sticky;top:0;z-index:20;
+ background:#07162bf2;
+ border-bottom:1px solid var(--line);
+ display:flex;align-items:center;
+ justify-content:space-between;
+ padding:0 6%;
+ backdrop-filter:blur(14px);
+}
+.logo{font-size:23px;font-weight:1000;letter-spacing:2px}
+.logo span{color:var(--cyan)}
+nav{
+ display:flex;align-items:center;gap:22px;
+ overflow-x:auto;white-space:nowrap;
+ scrollbar-width:none;
+}
+nav a{
+ color:var(--muted);font-size:11px;
+ font-weight:bold;transition:.2s;
+}
+nav a:hover{color:var(--cyan)}
+#soundBtn,.menuBtn{
+ border:1px solid var(--line);
+ background:var(--panel2);
+ color:white;border-radius:30px;
+ padding:10px 12px;font-size:11px;
+}
+.menuBtn{display:none}
+.hero{
+ min-height:540px;padding:100px 8%;
+ position:relative;overflow:hidden;
+ display:flex;align-items:center;
+ background:
+ linear-gradient(90deg,#061225 5%,#07172bdc 60%,#07172b55),
+ radial-gradient(ellipse at 80% 60%,#1677ff66,transparent 55%),
+ linear-gradient(135deg,#102d50,#061225);
+}
+.hero:after{
+ content:"";position:absolute;
+ width:500px;height:500px;
+ right:-100px;top:30px;
+ border:1px solid #4e9bff33;
+ border-radius:50%;
+ box-shadow:0 0 0 55px #4e9bff0a,
+ 0 0 0 110px #4e9bff08;
+}
+.heroContent{position:relative;z-index:2;max-width:700px}
+.eyebrow{
+ color:var(--cyan);font-size:11px;
+ font-weight:900;letter-spacing:4px;
+ margin-bottom:22px;
+}
+.hero h1{
+ font-size:clamp(48px,9vw,92px);
+ letter-spacing:-4px;line-height:.98;
+}
+.hero h1 span{color:var(--cyan);display:block}
+.hero p{
+ color:#a7bad3;line-height:1.8;
+ max-width:430px;margin:25px 0;
+ font-size:14px;
+}
+.primary{
+ display:inline-block;background:var(--blue);
+ color:white;border:0;border-radius:3px;
+ padding:15px 22px;font-size:11px;
+ font-weight:900;transition:.2s;
+}
+.primary:hover{background:#4094ff;transform:translateY(-3px)}
+.heroMark{
+ position:absolute;right:6%;bottom:35px;
+ font-size:clamp(100px,23vw,240px);
+ color:#ffffff09;font-weight:1000;
+ letter-spacing:-15px;
+}
+section{padding:75px 8%}
+.sectionLabel{
+ color:var(--cyan);font-size:10px;
+ letter-spacing:3px;font-weight:900;
+ margin-bottom:12px;
+}
+.sectionTitle{
+ font-size:clamp(28px,4vw,43px);
+ margin-bottom:28px;letter-spacing:-1px;
+}
+.stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ border-top:1px solid var(--line);
+ border-bottom:1px solid var(--line);
+}
+.stat{padding:24px 15px}
+.stat:not(:last-child){border-right:1px solid var(--line)}
+.stat strong{font-size:35px;display:block}
+.stat small{font-size:10px;color:var(--muted);letter-spacing:2px}
+.darkSection{background:#091a32}
+.matchList{display:grid;gap:12px}
+.match{
+ display:grid;grid-template-columns:1fr auto 1fr;
+ align-items:center;gap:15px;
+ background:var(--panel);padding:22px;
+ border:1px solid var(--line);transition:.2s;
+}
+.match:hover{border-color:var(--blue);transform:translateY(-2px)}
+.team{font-size:13px;font-weight:900}
+.team:last-child{text-align:right}
+.team small{
+ display:block;color:var(--muted);
+ font-size:10px;margin-top:6px;font-weight:normal;
+}
+.vs{font-size:12px;color:var(--cyan);font-weight:900}
+.tabs{display:flex;gap:10px;margin-bottom:22px}
+.tab{
+ padding:12px 23px;background:var(--panel);
+ color:white;border:1px solid var(--line);
+ font-size:11px;font-weight:bold;
+}
+.tab.active{background:var(--blue);border-color:var(--blue)}
+.tableWrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:450px}
+th,td{
+ padding:16px 12px;text-align:center;
+ border-bottom:1px solid var(--line);font-size:12px;
+}
+th{color:var(--muted);font-size:10px}
+td:first-child,th:first-child{text-align:left}
+.points{color:var(--cyan);font-weight:bold}
+.nationsGrid,.awardsGrid{
+ display:grid;grid-template-columns:repeat(2,1fr);
+ gap:13px;
+}
+.empty{
+ padding:35px 20px;text-align:center;
+ border:1px dashed #294464;
+ background:#0b1d36;color:var(--muted);
+ border-radius:5px;font-size:12px;
+}
+.nation,.award{
+ border:1px solid var(--line);
+ background:var(--panel);
+ padding:24px;cursor:pointer;
+ transition:.25s;position:relative;
+ overflow:hidden;
+}
+.nation:hover,.award:hover{
+ border-color:var(--cyan);
+ transform:translateY(-4px);
+ background:#112b4b;
+}
+.nation h3,.award h3{font-size:16px}
+.nation p,.award p{
+ color:var(--muted);font-size:11px;margin-top:8px;
+}
+.awardIcon{font-size:35px;margin-bottom:15px}
+.award:after{
+ content:"↗";position:absolute;
+ right:20px;top:20px;color:var(--cyan);
+}
+.champion{
+ background:linear-gradient(135deg,#102b4a,#08182e);
+ border:1px solid #42648b;
+ padding:32px 18px;text-align:center;
+ cursor:pointer;overflow:hidden;
+}
+.champion h3{font-size:22px;letter-spacing:3px}
+.champion p{color:var(--muted);font-size:12px;margin-top:9px}
+.trophyStage{
+ min-height:250px;display:flex;
+ align-items:center;justify-content:center;
+ perspective:900px;position:relative;
+}
+.trophy{
+ position:relative;width:130px;height:210px;
+ transform-style:preserve-3d;
+}
+.trophyBody{
+ position:absolute;bottom:0;left:37px;
+ width:56px;height:100px;
+ background:linear-gradient(90deg,#906019,#ffe39b,#bd7b22,#fff0b1,#805016);
+ clip-path:polygon(12% 0,88% 0,75% 65%,65% 80%,35% 80%,25% 65%);
+}
+.trophyBase{
+ position:absolute;bottom:0;left:25px;
+ width:80px;height:19px;
+ background:linear-gradient(#ffe9a3,#a66b18);
+ border-radius:4px 4px 2px 2px;
+}
+.trophyNeck{
+ position:absolute;bottom:85px;left:52px;
+ width:26px;height:30px;
+ background:linear-gradient(90deg,#99621b,#ffdc86,#a66b1b);
+}
+.trophyHead{
+ position:absolute;top:15px;left:38px;
+ width:54px;height:54px;border-radius:50%;
+ background:radial-gradient(circle at 35% 25%,#fff2bb,#e8ae43 40%,#9d6319 75%,#ffe29a);
+ box-shadow:0 0 24px #ffc95b66;
+ z-index:3;
+ transform-origin:center;
+}
+.trophyHead:after{
+ content:"";position:absolute;
+ inset:9px;border:2px solid #fff1b2;
+ border-radius:50%;opacity:.7;
+}
+.trophyStage.play .trophyHead{
+ animation:headJourney 3.5s ease-in-out forwards;
+}
+@keyframes headJourney{
+ 0%{transform:translate(0,0) scale(1) rotate(0)}
+ 17%{transform:translate(0,-85px) scale(2.5) rotate(0)}
+ 55%{transform:translate(0,-85px) scale(2.5) rotate(720deg)}
+ 80%{transform:translate(0,0) scale(1) rotate(1080deg)}
+ 100%{transform:translate(0,0) scale(1) rotate(1080deg)}
+}
+.trophyStage.play .trophyBody{
+ animation:bodyGlow 3.5s ease forwards;
+}
+@keyframes bodyGlow{
+ 50%{filter:brightness(1.7) drop-shadow(0 0 15px gold)}
+ 100%{filter:brightness(1.3) drop-shadow(0 0 18px gold)}
+}
+#awardModal,#loginModal{
+ position:fixed;inset:0;z-index:50;
+ background:#020914eF;
+ display:none;align-items:center;
+ justify-content:center;padding:18px;
+}
+.modal{
+ background:#0c203c;border:1px solid #294c71;
+ width:100%;max-width:650px;
+ max-height:88vh;overflow:auto;padding:24px;
+ animation:modalIn .3s ease;
+}
+@keyframes modalIn{
+ from{opacity:0;transform:translateY(20px) scale(.97)}
+ to{opacity:1;transform:translateY(0) scale(1)}
+}
+.modalTop{
+ display:flex;justify-content:space-between;
+ align-items:center;margin-bottom:20px;
+}
+.close{
+ border:0;background:#183656;color:white;
+ padding:8px 12px;
+}
+.rankRow{
+ display:grid;grid-template-columns:45px 1fr auto;
+ gap:12px;padding:14px 10px;
+ border-bottom:1px solid var(--line);
+ font-size:12px;align-items:center;
+}
+.rankNumber{color:var(--cyan);font-weight:bold}
+.rankName{font-weight:bold}
+.rankScore{color:var(--muted)}
+.adminPanel{background:#07182e}
+.adminGrid{
+ display:grid;grid-template-columns:repeat(2,1fr);
+ gap:12px;
+}
+.adminAction{
+ background:var(--panel2);
+ border:1px solid var(--line);
+ color:white;text-align:left;padding:18px;
+}
+.adminAction:hover{border-color:var(--cyan)}
+.adminAction small{
+ display:block;color:var(--muted);margin-top:6px;
+}
+input,select{
+ width:100%;background:#07182e;
+ border:1px solid #294968;color:white;
+ padding:12px;margin:7px 0 14px;
+ outline:none;border-radius:3px;
+}
+input:focus,select:focus{border-color:var(--cyan)}
+.formLabel{font-size:11px;color:var(--muted)}
+.formButton{
+ background:var(--blue);color:white;
+ padding:12px 18px;border:0;
+ font-size:11px;font-weight:bold;
+}
+#topBtn{
+ position:fixed;bottom:24px;right:20px;
+ width:45px;height:45px;border-radius:50%;
+ border:1px solid #4b8bca;background:#1268d9;
+ color:white;font-size:21px;
+ opacity:0;pointer-events:none;transition:.25s;
+ z-index:30;
+}
+#topBtn.show{opacity:1;pointer-events:auto}
+footer{
+ border-top:1px solid var(--line);
+ padding:35px 8%;color:var(--muted);
+ font-size:11px;display:flex;
+ justify-content:space-between;gap:15px;
+}
+.hidden{display:none!important}
+@media(max-width:700px){
+ header{padding:0 4%;height:65px}
+ .logo{font-size:18px}
+ nav{gap:15px;max-width:58%}
+ nav a{font-size:9px}
+ #soundBtn{font-size:9px;padding:9px}
+ .hero{min-height:470px;padding:75px 6%}
+ .hero h1{letter-spacing:-2px}
+ section{padding:55px 6%}
+ .nationsGrid,.awardsGrid,.adminGrid{grid-template-columns:1fr}
+ .match{padding:17px 12px}
+ .team{font-size:11px}
+ footer{padding:30px 6%}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <a class="logo" href="#home">UEWC<span>.</span></a>
+ <nav id="navigation">
+  <a href="#home">HOME</a>
+  <a href="#fixtures">FIXTURES</a>
+  <a href="#standings">STANDINGS</a>
+  <a href="#nations">NATIONS</a>
+  <a href="#awards">AWARDS</a>
+  <a href="#admin" id="adminLink">ADMIN 🔒</a>
+ </nav>
+ <button id="soundBtn">♫ SOUND OFF</button>
+</header>
+
+<main id="publicSite">
+
+<section class="hero" id="home">
+ <div class="heroContent">
+  <div class="eyebrow">INTERNATIONAL FOOTBALL · UEWC</div>
+  <h1>THE WORLD<br><span>IS WATCHING.</span></h1>
+  <p>Eight nations. Two groups. One champion.
+  The stage is set for the Unmatched Ego World Cup.</p>
+  <a class="primary" href="#fixtures">ENTER TOURNAMENT ↗</a>
+ </div>
+ <div class="heroMark">UEWC</div>
+</section>
+
+<section>
+ <div class="sectionLabel">THE COMPETITION</div>
+ <h2 class="sectionTitle">Eight nations. One dream.</h2>
+ <div class="stats">
+  <div class="stat"><strong id="teamCount">08</strong><small>NATIONS</small></div>
+  <div class="stat"><strong>02</strong><small>GROUPS</small></div>
+  <div class="stat"><strong>04</strong><small>PER GROUP</small></div>
+ </div>
+</section>
+
+<section class="darkSection" id="fixtures">
+ <div class="sectionLabel">MATCH CENTRE</div>
+ <h2 class="sectionTitle">Fixtures & Results</h2>
+ <div class="matchList" id="matchList">
+  <div class="empty">No matches added yet. Check back soon.</div>
+ </div>
+</section>
+
+<section id="standings">
+ <div class="sectionLabel">THE RACE FOR GLORY</div>
+ <h2 class="sectionTitle">Group Standings</h2>
+ <div class="tabs">
+  <button class="tab active" data-group="A">GROUP A</button>
+  <button class="tab" data-group="B">GROUP B</button>
+ </div>
+ <div class="tableWrap">
+  <table>
+   <thead><tr>
+    <th>NATION</th><th>P</th><th>W</th>
+    <th>D</th><th>L</th><th>GD</th><th>PTS</th>
+   </tr></thead>
+   <tbody id="standingBody"></tbody>
+  </table>
+ </div>
+</section>
+
+<section class="darkSection" id="nations">
+ <div class="sectionLabel">THE CONTENDERS</div>
+ <h2 class="sectionTitle">Nations</h2>
+ <div class="nationsGrid" id="nationGrid">
+  <div class="empty">Nations will appear here once added by the administrator.</div>
+ </div>
+</section>
+
+<section id="awards">
+ <div class="sectionLabel">INDIVIDUAL EXCELLENCE</div>
+ <h2 class="sectionTitle">The Awards</h2>
+ <div class="awardsGrid" id="awardsGrid"></div>
+ <div style="height:15px"></div>
+ <div class="champion" onclick="openChampion()">
+  <div class="trophyStage" id="trophyStage">
+   <div class="trophy">
+    <div class="trophyHead"></div>
+    <div class="trophyNeck"></div>
+    <div class="trophyBody"></div>
+    <div class="trophyBase"></div>
+   </div>
+  </div>
+  <h3>CHAMPIONS AWARD</h3>
+  <p>Tap to reveal the ultimate champions</p>
+ </div>
+</section>
+
+</main>
+
+<section id="admin" class="adminPanel hidden">
+ <div class="sectionLabel">CONTROL CENTRE</div>
+ <h2 class="sectionTitle">UEWC Administration</h2>
+ <div class="stats" style="margin-bottom:25px">
+  <div class="stat"><strong id="adminTeams">0</strong><small>TEAMS</small></div>
+  <div class="stat"><strong id="adminMatches">0</strong><small>MATCHES</small></div>
+  <div class="stat"><strong id="adminAwards">6</strong><small>AWARDS</small></div>
+ </div>
+
+ <div class="adminGrid">
+  <button class="adminAction" onclick="adminForm('nation')">
+   + ADD NATION<small>Register a country and group</small>
+  </button>
+  <button class="adminAction" onclick="adminForm('match')">
+   + ADD MATCH<small>Schedule an upcoming match</small>
+  </button>
+  <button class="adminAction" onclick="adminForm('result')">
+   + ENTER RESULT<small>Record a completed match</small>
+  </button>
+  <button class="adminAction" onclick="adminForm('player')">
+   + EDIT AWARD<small>Update leaderboard positions</small>
+  </button>
+  <button class="adminAction" onclick="adminForm('champion')">
+   + SET CHAMPIONS<small>Record tournament winners</small>
+  </button>
+  <button class="adminAction" onclick="adminForm('delete')">
+   MANAGE DATA<small>View and remove entries</small>
+  </button>
+ </div>
+ <div id="adminEditor" style="margin-top:25px"></div>
+ <button class="formButton" onclick="logout()" style="margin-top:25px;background:#334760">LOG OUT</button>
+</section>
+
+<footer>
+ <span>UEWC OFFICIAL © 2026</span>
+ <span>UNMATCHED EGO WORLD CUP</span>
+</footer>
+
+<button id="topBtn" aria-label="Back to top">↑</button>
+
+<div id="awardModal">
+ <div class="modal">
+  <div class="modalTop">
+   <h2 id="modalTitle">LEADERBOARD</h2>
+   <button class="close" onclick="closeModal()">CLOSE ✕</button>
+  </div>
+  <div id="leaderboard"></div>
+ </div>
+</div>
+
+<div id="loginModal">
+ <div class="modal" style="max-width:390px">
+  <div class="modalTop">
+   <h2>ADMIN LOGIN</h2>
+   <button class="close" onclick="closeLogin()">✕</button>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:18px">
+   Administrator authentication required.
+  </p>
+  <label class="formLabel">PASSWORD</label>
+  <input id="adminPassword" type="password" placeholder="Enter password">
+  <button class="formButton" style="width:100%" onclick="login()">ENTER ADMIN PANEL</button>
+  <p id="loginError" style="color:#ff7777;font-size:12px;margin-top:12px"></p>
+ </div>
+</div>
+
+<script>
+// =====================================
+// UEWC DATA
+// =====================================
+
+const AWARDS=[
+ {id:"boot",name:"GOLDEN BOOT",icon:"🥇",stat:"Goals"},
+ {id:"glove",name:"GOLDEN GLOVE",icon:"🧤",stat:"Saves"},
+ {id:"player",name:"PLAYER OF THE TOURNAMENT",icon:"🏆",stat:"Points"},
+ {id:"defender",name:"BEST DEFENDER",icon:"🛡️",stat:"Points"},
+ {id:"playmaker",name:"PLAYMAKER AWARD",icon:"🎯",stat:"Assists"},
+ {id:"champion",name:"CHAMPIONS AWARD",icon:"🏆",stat:"Titles"}
+];
+
+let data={
+ nations:[],
+ matches:[],
+ awards:{},
+ champions:[]
+};
+
+let activeGroup="A";
+let soundOn=false;
+let audioContext=null;
+let currentAward="";
+
+AWARDS.forEach(a=>data.awards[a.id]=[]);
+
+// =====================================
+// SOUND ENGINE
+// =====================================
+
+function playSound(type="click"){
+ if(!soundOn)return;
+ try{
+  audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
+  if(audioContext.state==="suspended")audioContext.resume();
+  const ctx=audioContext;
+  const oscillator=ctx.createOscillator();
+  const gain=ctx.createGain();
+  const sounds={
+   click:[650,.09],
+   slide:[420,.16],
+   open:[780,.2],
+   close:[360,.12],
+   trophy:[190,.55],
+   success:[920,.3]
+  };
+  const [frequency,duration]=sounds[type]||sounds.click;
+  oscillator.type=type==="trophy"?"triangle":"sine";
+  oscillator.frequency.setValueAtTime(frequency,ctx.currentTime);
+  if(type==="trophy"){
+   oscillator.frequency.exponentialRampToValueAtTime(85,ctx.currentTime+duration);
+  }
+  gain.gain.setValueAtTime(.0001,ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.07,ctx.currentTime+.025);
+  gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+duration);
+  oscillator.connect(gain);
+  gain.connect(ctx.destination);
+  oscillator.start();
+  oscillator.stop(ctx.currentTime+duration);
+ }catch(e){}
+}
+
+document.getElementById("soundBtn").onclick=()=>{
+ soundOn=!soundOn;
+ document.getElementById("soundBtn").textContent=
+ soundOn?"♫ SOUND ON":"♫ SOUND OFF";
+ if(soundOn)playSound("success");
+};
+
+document.addEventListener("click",e=>{
+ if(e.target.closest("button")||e.target.closest("a")){
+  if(!["soundBtn"].includes(e.target.id))playSound("click");
+ }
+});
+
+// =====================================
+// DATA STORAGE
+// =====================================
+
+// Local preview storage.
+// Connect Supabase before using live shared admin data.
+function saveData(){
+ localStorage.setItem("uewcData",JSON.stringify(data));
+ renderAll();
+}
+function loadData(){
+ try{
+  const saved=JSON.parse(localStorage.getItem("uewcData"));
+  if(saved){
+   data={...data,...saved};
+   AWARDS.forEach(a=>{
+    if(!data.awards[a.id])data.awards[a.id]=[];
+   });
+  }
+ }catch(e){}
+}
+
+// =====================================
+// PUBLIC WEBSITE RENDERING
+// =====================================
+
+function renderAwards(){
+ document.getElementById("awardsGrid").innerHTML=AWARDS
+ .filter(a=>a.id!=="champion")
+ .map(a=>`
+ <div class="award" onclick="openAward('${a.id}')">
+  <div class="awardIcon">${a.icon}</div>
+  <h3>${a.name}</h3>
+  <p>View top 25 leaderboard →</p>
+ </div>`).join("");
+}
+
+function renderNations(){
+ const grid=document.getElementById("nationGrid");
+ document.getElementById("teamCount").textContent=
+ String(data.nations.length).padStart(2,"0");
+ if(!data.nations.length){
+  grid.innerHTML='<div class="empty">Nations will appear here once added by the administrator.</div>';
+  return;
+ }
+ grid.innerHTML=data.nations.map(n=>`
+ <div class="nation">
+  <h3>${escapeHTML(n.flag||"🌍")} ${escapeHTML(n.name)}</h3>
+  <p>GROUP ${escapeHTML(n.group)}</p>
+ </div>`).join("");
+}
+
+function renderMatches(){
+ const list=document.getElementById("matchList");
+ if(!data.matches.length){
+  list.innerHTML='<div class="empty">No matches added yet.</div>';
+  return;
+ }
+ list.innerHTML=data.matches.map(m=>`
+ <div class="match">
+  <div class="team">${escapeHTML(m.home)}
+   <small>${escapeHTML(m.group||"GROUP")}</small></div>
+  <div class="vs">${m.played?escapeHTML(m.homeScore)+" - "+escapeHTML(m.awayScore):"VS"}
+   <small>${escapeHTML(m.date||"UPCOMING")}</small>
+  </div>
+  <div class="team">${escapeHTML(m.away)}
+   <small>${m.played?"FULL TIME":"UPCOMING"}</small></div>
+ </div>`).join("");
+}
+
+function getStandings(group){
+ const teams=data.nations.filter(n=>n.group===group).map(n=>({
+  name:n.name,played:0,wins:0,draws:0,losses:0,
+  gf:0,ga:0,pts:0
+ }));
+ data.matches.filter(m=>m.played&&m.group===group).forEach(m=>{
+  const h=teams.find(t=>t.name===m.home);
+  const a=teams.find(t=>t.name===m.away);
+  if(!h||!a)return;
+  const hs=Number(m.homeScore),as=Number(m.awayScore);
+  h.played++;a.played++;
+  h.gf+=hs;h.ga+=as;a.gf+=as;a.ga+=hs;
+  if(hs>as){h.wins++;h.pts+=3;a.losses++}
+  else if(hs<as){a.wins++;a.pts+=3;h.losses++}
+  else{h.draws++;a.draws++;h.pts++;a.pts++}
+ });
+ return teams.sort((a,b)=>
+  b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf
+ );
+}
+
+function renderStandings(){
+ const teams=getStandings(activeGroup);
+ document.getElementById("standingBody").innerHTML=teams.length?
+ teams.map((t,i)=>`
+ <tr>
+  <td>${i+1}. ${escapeHTML(t.name)}</td>
+  <td>${t.played}</td><td>${t.wins}</td>
+  <td>${t.draws}</td><td>${t.losses}</td>
+  <td>${t.gf-t.ga}</td><td class="points">${t.pts}</td>
+ </tr>`).join(""):'<tr><td colspan="7">No nations registered in this group.</td></tr>';
+}
+
+document.querySelectorAll(".tab").forEach(btn=>{
+ btn.onclick=()=>{
+  activeGroup=btn.dataset.group;
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));
+  renderStandings();
+  playSound("slide");
+ };
+});
+
+// =====================================
+// AWARD LEADERBOARDS
+// =====================================
+
+function openAward(id){
+ currentAward=id;
+ const award=AWARDS.find(a=>a.id===id);
+ document.getElementById("modalTitle").textContent=award.name;
+ renderLeaderboard();
+ document.getElementById("awardModal").style.display="flex";
+ playSound("open");
+}
+
+function renderLeaderboard(){
+ const entries=data.awards[currentAward]||[];
+ const award=AWARDS.find(a=>a.id===currentAward);
+ let html="";
+ for(let i=0;i<25;i++){
+  const entry=entries.find(e=>Number(e.rank)===i+1);
+  html+=`
+   <div class="rankRow">
+    <span class="rankNumber">#${i+1}</span>
+    <span class="rankName">${entry?escapeHTML(entry.name):"—"}</span>
+    <span class="rankScore">${entry?escapeHTML(String(entry.score))+" "+award.stat:"—"}</span>
+   </div>`;
+ }
+ document.getElementById("leaderboard").innerHTML=html;
+}
+
+function closeModal(){
+ document.getElementById("awardModal").style.display="none";
+ playSound("close");
+}
+
+// =====================================
+// CHAMPIONS TROPHY ANIMATION
+// =====================================
+
+function openChampion(){
+ const stage=document.getElementById("trophyStage");
+ stage.classList.remove("play");
+ void stage.offsetWidth;
+ stage.classList.add("play");
+ playSound("trophy");
+ setTimeout(()=>{
+  openAward("champion");
+ },3700);
+}
+
+// =====================================
+// ADMIN AUTHENTICATION
+// =====================================
+
+// DEMO ONLY: Replace this with Supabase Auth.
+// Never use a password stored in public HTML
+// as real security for a live admin panel.
+const DEMO_PASSWORD="CHANGE-THIS-DEMO-PASSWORD";
+let loggedIn=false;
+
+document.getElementById("adminLink").onclick=e=>{
+ e.preventDefault();
+ if(loggedIn){showAdmin();return}
+ document.getElementById("loginModal").style.display="flex";
+ playSound("open");
+};
+
+function login(){
+ const password=document.getElementById("adminPassword").value;
+ if(password===DEMO_PASSWORD){
+  loggedIn=true;
+  closeLogin();
+  showAdmin();
+  playSound("success");
+ }else{
+  document.getElementById("loginError").textContent="Incorrect password.";
+ }
+}
+
+function closeLogin(){
+ document.getElementById("loginModal").style.display="none";
+}
+function logout(){
+ loggedIn=false;
+ document.getElementById("admin").classList.add("hidden");
+ document.getElementById("publicSite").classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
+ playSound("close");
+}
+function showAdmin(){
+ if(!loggedIn)return;
+ document.getElementById("publicSite").classList.add("hidden");
+ document.getElementById("admin").classList.remove("hidden");
+ document.getElementById("adminTeams").textContent=data.nations.length;
+ document.getElementById("adminMatches").textContent=data.matches.length;
+ document.getElementById("adminAwards").textContent="6";
+ document.getElementById("admin").scrollIntoView();
+}
+
+// =====================================
+// ADMIN FORMS
+// =====================================
+
+function adminForm(type){
+ const editor=document.getElementById("adminEditor");
+ let html="";
+ if(type==="nation"){
+  html=`
+   <h3>ADD NATION</h3>
+   <label class="formLabel">NATION NAME</label>
+   <input id="fName" placeholder="France">
+   <label class="formLabel">FLAG EMOJI</label>
+   <input id="fFlag" placeholder="🇫🇷">
+   <label class="formLabel">GROUP</label>
+   <select id="fGroup"><option>A</option><option>B</option></select>
+   <button class="formButton" onclick="addNation()">SAVE NATION</button>`;
+ }
+ if(type==="match"){
+  html=`
+   <h3>ADD UPCOMING MATCH</h3>
+   <label class="formLabel">HOME NATION</label>
+   <select id="fHome">${nationOptions()}</select>
+   <label class="formLabel">AWAY NATION</label>
+   <select id="fAway">${nationOptions()}</select>
+   <label class="formLabel">GROUP</label>
+   <select id="fGroup"><option>A</option><option>B</option></select>
+   <label class="formLabel">DATE / SLOT</label>
+   <input id="fDate" placeholder="Slot 01">
+   <button class="formButton" onclick="addMatch()">SAVE MATCH</button>`;
+ }
+ if(type==="result"){
+  html=`
+   <h3>ENTER MATCH RESULT</h3>
+   <label class="formLabel">MATCH</label>
+   <select id="fMatch">${data.matches.map((m,i)=>`<option value="${i}">${escapeHTML(m.home)} vs ${escapeHTML(m.away)}</option>`).join("")}</select>
+   <label class="formLabel">HOME SCORE</label>
+   <input id="fHomeScore" type="number" min="0" placeholder="0">
+   <label class="formLabel">AWAY SCORE</label>
+   <input id="fAwayScore" type="number" min="0" placeholder="0">
+   <button class="formButton" onclick="saveResult()">SAVE RESULT</button>`;
+ }
+ if(type==="player"){
+  html=`
+   <h3>UPDATE AWARD LEADERBOARD</h3>
+   <label class="formLabel">AWARD</label>
+   <select id="fAward">${AWARDS.map(a=>`<option value="${a.id}">${a.name}</option>`).join("")}</select>
+   <label class="formLabel">RANK (1-25)</label>
+   <input id="fRank" type="number" min="1" max="25" placeholder="1">
+   <label class="formLabel">PLAYER NAME</label>
+   <input id="fPlayer" placeholder="Player name">
+   <label class="formLabel">STATISTIC</label>
+   <input id="fScore" type="number" min="0" placeholder="0">
+   <button class="formButton" onclick="savePlayer()">SAVE LEADERBOARD ENTRY</button>`;
+ }
+ if(type==="champion"){
+  html=`
+   <h3>SET CHAMPIONS</h3>
+   <label class="formLabel">WINNING NATION</label>
+   <input id="fChampion" placeholder="Nation name">
+   <label class="formLabel">SEASON</label>
+   <input id="fSeason" placeholder="Season 01">
+   <button class="formButton" onclick="saveChampion()">SAVE CHAMPION</button>`;
+ }
+ if(type==="delete"){
+  html=`
+   <h3>MANAGE TOURNAMENT DATA</h3>
+   <p style="color:var(--muted);font-size:12px;margin:15px 0">
+    Registered nations: ${data.nations.length}<br>
+    Scheduled matches: ${data.matches.length}
+   </p>
+   <button class="formButton" onclick="clearData()" style="background:#a33445">CLEAR ALL TOURNAMENT DATA</button>`;
+ }
+ editor.innerHTML=html;
+ editor.scrollIntoView({behavior:"smooth",block:"center"});
+ playSound("slide");
+}
+
+function nationOptions(){
+ return data.nations.map(n=>`<option>${escapeHTML(n.name)}</option>`).join("");
+}
+
+function addNation(){
+ const name=document.getElementById("fName").value.trim();
+ if(!name)return alert("Enter a nation name.");
+ if(data.nations.length>=8)return alert("Maximum 8 nations.");
+ if(data.nations.some(n=>n.name.toLowerCase()===name.toLowerCase()))
+  return alert("Nation already exists.");
+ data.nations.push({
+  name,flag:document.getElementById("fFlag").value,
+  group:document.getElementById("fGroup").value
+ });
+ saveData();adminRefresh();alert("Nation added!");
+}
+
+function addMatch(){
+ const home=document.getElementById("fHome").value;
+ const away=document.getElementById("fAway").value;
+ if(!home||!away||home===away)return alert("Choose two different nations.");
+ data.matches.push({
+  home,away,
+  group:document.getElementById("fGroup").value,
+  date:document.getElementById("fDate").value,
+  played:false
+ });
+ saveData();adminRefresh();alert("Match added!");
+}
+
+function saveResult(){
+ const i=Number(document.getElementById("fMatch").value);
+ const m=data.matches[i];
+ if(!m)return alert("Select a match.");
+ const hs=document.getElementById("fHomeScore").value;
+ const as=document.getElementById("fAwayScore").value;
+ if(hs===""||as===""||Number(hs)<0||Number(as)<0)
+  return alert("Enter valid scores.");
+ m.homeScore=Number(hs);
+ m.awayScore=Number(as);
+ m.played=true;
+ saveData();adminRefresh();alert("Result saved and standings updated!");
+}
+
+function savePlayer(){
+ const id=document.getElementById("fAward").value;
+ const rank=Number(document.getElementById("fRank").value);
+ const name=document.getElementById("fPlayer").value.trim();
+ const score=document.getElementById("fScore").value;
+ if(rank<1||rank>25||!name||score==="")
+  return alert("Check all fields.");
+ data.awards[id]=data.awards[id].filter(e=>e.rank!==rank);
+ data.awards[id].push({rank,name,score:Number(score)});
+ data.awards[id].sort((a,b)=>a.rank-b.rank);
+ saveData();adminRefresh();alert("Award entry saved!");
+}
+
+function saveChampion(){
+ const name=document.getElementById("fChampion").value.trim();
+ const season=document.getElementById("fSeason").value.trim();
+ if(!name||!season)return alert("Enter nation and season.");
+ data.champions.push({name,season});
+ data.awards.champion=data.champions.map((c,i)=>({
+  rank:i+1,name:c.name,score:c.season
+ }));
+ saveData();adminRefresh();alert("Champion recorded!");
+}
+
+function clearData(){
+ if(!confirm("Delete ALL tournament data?"))return;
+ data={
+  nations:[],matches:[],awards:{},champions:[]
+ };
+ AWARDS.forEach(a=>data.awards[a.id]=[]);
+ saveData();adminRefresh();
+}
+
+function adminRefresh(){
+ document.getElementById("adminTeams").textContent=data.nations.length;
+ document.getElementById("adminMatches").textContent=data.matches.length;
+}
+
+// =====================================
+// HELPERS & INITIALIZATION
+// =====================================
+
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function renderAll(){
+ renderAwards();
+ renderNations();
+ renderMatches();
+ renderStandings();
+}
+
+const topBtn=document.getElementById("topBtn");
+window.addEventListener("scroll",()=>{
+ topBtn.classList.toggle("show",window.scrollY>350);
+},{passive:true});
+topBtn.onclick=()=>{
+ window.scrollTo({top:0,behavior:"smooth"});
+ playSound("slide");
+};
+
+document.getElementById("awardModal").onclick=e=>{
+ if(e.target.id==="awardModal")closeModal();
+};
+document.getElementById("loginModal").onclick=e=>{
+ if(e.target.id==="loginModal")closeLogin();
+};
+document.getElementById("adminPassword").addEventListener("keydown",e=>{
+ if(e.key==="Enter")login();
+});
+
+loadData();
+renderAll();
+</script>
+</body>
+</html>
